@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aperture - Silent Volumes</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #10100f;
+    color: #eeeae3;
+    font-family: 'Roboto Mono', monospace;
+    overflow-x: hidden;
+}
+
+:root {
+    --black: #10100f;
+    --white: #eeeae3;
+    --grey: #92918c;
+    --line: #353431;
+    --accent: #b9a58d;
+}
+
+img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+}
+
+/* TOP HEADER */
+
+.top-header {
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    border-bottom: 1px solid var(--line);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--grey);
+}
+
+.top-header a:hover {
+    color: white;
+}
+
+/* SIDE NAVIGATION */
+
+.side-nav {
+    position: fixed;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.side-nav a {
+    color: #777;
+    font-size: 9px;
+    writing-mode: vertical-rl;
+    letter-spacing: 2px;
+    transition: .3s;
+}
+
+.side-nav a:hover {
+    color: white;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+    background:
+    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.8)),
+    url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1800&q=90')
+    center/cover;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent,rgba(0,0,0,.3));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-small {
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: #aaa49c;
+}
+
+.hero h1 {
+    font-size: clamp(65px, 10vw, 125px);
+    line-height: .8;
+    letter-spacing: 8px;
+    margin: 35px 0 20px;
+    text-transform: uppercase;
+}
+
+.hero h1 span {
+    display: block;
+    font-size: .43em;
+    font-style: italic;
+    letter-spacing: 12px;
+    margin-top: 20px;
+}
+
+.hero-line {
+    width: 50px;
+    height: 1px;
+    background: #b9a58d;
+    margin: 35px auto;
+}
+
+.hero-bottom {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: #b8b3ac;
+}
+
+/* INTRO */
+
+.intro {
+    padding: 120px 15%;
+    text-align: center;
+}
+
+.intro span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--accent);
+}
+
+.intro h2 {
+    font-size: clamp(35px, 5vw, 65px);
+    line-height: 1.1;
+    margin: 35px auto;
+    max-width: 850px;
+}
+
+.intro p {
+    font-size: 11px;
+    line-height: 2.2;
+    color: var(--grey);
+    max-width: 600px;
+    margin: auto;
+}
+
+/* PROJECT PLATES */
+
+.plates {
+    padding: 40px 7%;
+}
+
+.plate {
+    margin-bottom: 100px;
+    position: relative;
+}
+
+.plate img {
+    width: 100%;
+    height: 650px;
+    transition: transform .8s;
+}
+
+.plate:hover img {
+    transform: scale(1.01);
+}
+
+.plate-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.plate-info h3 {
+    font-size: 30px;
+}
+
+.plate-info p {
+    color: var(--grey);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.plate-number {
+    color: var(--accent);
+    font-size: 10px;
+}
+
+/* TWO IMAGE DIPTYCH */
+
+.diptych {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-bottom: 100px;
+}
+
+.diptych-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.diptych-item img {
+    height: 550px;
+    transition: .7s;
+}
+
+.diptych-item:hover img {
+    transform: scale(1.04);
+}
+
+.diptych-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+}
+
+/* QUOTE */
+
+.quote {
+    padding: 120px 15%;
+    text-align: center;
+}
+
+.quote span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--accent);
+}
+
+.quote h2 {
+    font-size: clamp(35px, 5vw, 60px);
+    font-style: italic;
+    line-height: 1.2;
+    margin: 35px auto;
+    max-width: 800px;
+}
+
+.quote p {
+    color: var(--grey);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+/* WIDE ARCHITECTURE IMAGE */
+
+.wide-image {
+    padding: 0 7%;
+}
+
+.wide-image img {
+    height: 650px;
+}
+
+/* JOURNAL */
+
+.journal {
+    padding: 120px 12%;
+    background: #171715;
+}
+
+.journal-heading {
+    margin-bottom: 65px;
+}
+
+.journal-heading span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--accent);
+}
+
+.journal-heading h2 {
+    font-size: 65px;
+    margin-top: 20px;
+}
+
+.journal-content {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 50px;
+}
+
+/* CSS JOURNAL TABS */
+
+.journal-tabs {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #444;
+}
+
+.journal-tabs label {
+    padding: 20px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #777;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+    transition: .3s;
+}
+
+.journal-tabs label:hover {
+    color: white;
+}
+
+.journal-content input {
+    display: none;
+}
+
+.journal-content:has(#entry1:checked) label[for="entry1"],
+.journal-content:has(#entry2:checked) label[for="entry2"],
+.journal-content:has(#entry3:checked) label[for="entry3"] {
+    color: white;
+    border-left: 2px solid var(--accent);
+}
+
+.journal-entries {
+    min-height: 250px;
+}
+
+.entry {
+    display: none;
+}
+
+#entry1:checked ~ .journal-entries .entry1,
+#entry2:checked ~ .journal-entries .entry2,
+#entry3:checked ~ .journal-entries .entry3 {
+    display: block;
+}
+
+.entry span {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--accent);
+}
+
+.entry h3 {
+    font-size: 43px;
+    margin: 20px 0;
+}
+
+.entry p {
+    color: var(--grey);
+    font-size: 11px;
+    line-height: 2.2;
+    max-width: 550px;
+}
+
+/* CONTACT */
+
+.contact {
+    padding: 120px 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+}
+
+.contact-info span {
+    color: var(--accent);
+    font-size: 9px;
+    letter-spacing: 4px;
+}
+
+.contact-info h2 {
+    font-size: clamp(45px, 6vw, 75px);
+    line-height: .95;
+    margin: 30px 0;
+}
+
+.contact-info p {
+    font-size: 11px;
+    color: var(--grey);
+    line-height: 2;
+    max-width: 400px;
+}
+
+.contact-info a {
+    display: inline-block;
+    margin-top: 30px;
+    font-size: 11px;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 10px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #444;
+    padding: 15px 0;
+    color: white;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    outline: none;
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-bottom-color: var(--accent);
+}
+
+.contact-form button {
+    align-self: flex-start;
+    background: transparent;
+    color: white;
+    border: 1px solid #777;
+    padding: 15px 30px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background: white;
+    color: black;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 30px 7%;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer h3 {
+    font-size: 25px;
+    letter-spacing: 4px;
+}
+
+footer p {
+    font-size: 9px;
+    color: var(--grey);
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-links a {
+    font-size: 9px;
+    color: var(--grey);
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 768px) {
+
+    .top-header {
+        padding: 0 5%;
+    }
+
+    .side-nav {
+        display: none;
+    }
+
+    .hero {
+        min-height: 75vh;
+    }
+
+    .hero h1 {
+        letter-spacing: 3px;
+    }
+
+    .intro {
+        padding: 80px 8%;
+    }
+
+    .plates {
+        padding: 30px 5%;
+    }
+
+    .plate {
+        margin-bottom: 65px;
+    }
+
+    .plate img {
+        height: 350px;
+    }
+
+    .plate-info h3 {
+        font-size: 23px;
+    }
+
+    .diptych {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .diptych-item img {
+        height: 400px;
+    }
+
+    .quote {
+        padding: 80px 8%;
+    }
+
+    .wide-image {
+        padding: 0 5%;
+    }
+
+    .wide-image img {
+        height: 350px;
+    }
+
+    .journal {
+        padding: 80px 7%;
+    }
+
+    .journal-heading h2 {
+        font-size: 48px;
+    }
+
+    .journal-content {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .journal-tabs {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .journal-tabs label {
+        padding: 15px;
+    }
+
+    .entry h3 {
+        font-size: 35px;
+    }
+
+    .contact {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        padding: 80px 8%;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="top-header">
+    <a href="#home">APERTURE STUDIO</a>
+    <span>ARCHITECTURE / PHOTOGRAPHY</span>
+    <a href="#contact">ENQUIRIES ↗</a>
+</header>
+
+<!-- SIDE NAVIGATION -->
+
+<nav class="side-nav">
+    <a href="#home">INTRO</a>
+    <a href="#work">SELECTED WORK</a>
+    <a href="#journal">JOURNAL</a>
+    <a href="#contact">CONTACT</a>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <p class="hero-small">AN ARCHITECTURAL PHOTOGRAPHY STUDIO</p>
+
+        <h1>
+            SILENT
+            <span>VOLUMES</span>
+        </h1>
+
+        <div class="hero-line"></div>
+
+        <p class="hero-bottom">
+            FORM · LIGHT · SPACE
+        </p>
+
+    </div>
+
+</section>
+
+<!-- INTRO -->
+
+<section class="intro">
+
+    <span>01 — OUR PERSPECTIVE</span>
+
+    <h2>
+        Architecture is the language of space,
+        and light is the voice that gives it life.
+    </h2>
+
+    <p>
+        We document spaces through a considered
+        lens, exploring the relationship between
+        architecture, materials, light and the
+        surrounding landscape.
+    </p>
+
+</section>
+
+<!-- SELECTED WORK -->
+
+<section class="plates" id="work">
+
+    <div class="plate">
+
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=90" alt="Modern architecture house">
+
+        <div class="plate-info">
+            <div>
+                <p>RESIDENTIAL ARCHITECTURE — 2026</p>
+                <h3>The Atrium</h3>
+            </div>
+            <span class="plate-number">01 / 04</span>
+        </div>
+
+    </div>
+
+    <div class="plate">
+
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1800&q=90" alt="Interior living room">
+
+        <div class="plate-info">
+            <div>
+                <p>INTERIOR DESIGN — 2026</p>
+                <h3>Still Form</h3>
+            </div>
+            <span class="plate-number">02 / 04</span>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- QUOTE -->
+
+<section class="quote">
+
+    <span>02 — A THOUGHT ON SPACE</span>
+
+    <h2>
+        "Architecture is not just about
+        buildings. It is about the
+        experience of being within them."
+    </h2>
+
+    <p>APERTURE STUDIO — NOTES ON DESIGN</p>
+
+</section>
+
+<!-- DIPTYCH -->
+
+<section class="plates">
+
+    <div class="plate">
+
+        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90" alt="Contemporary interior">
+
+        <div class="plate-info">
+            <div>
+                <p>INTERIOR ARCHITECTURE</p>
+                <h3>Infinite Void</h3>
+            </div>
+            <span class="plate-number">03 / 04</span>
+        </div>
+
+    </div>
+
+    <div class="diptych">
+
+        <div class="diptych-item">
+            <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=900&q=90" alt="Architectural house">
+            <div class="diptych-caption">The Residence</div>
+        </div>
+
+        <div class="diptych-item">
+            <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=90" alt="Modern architecture">
+            <div class="diptych-caption">Light & Shadow</div>
+        </div>
+
+    </div>
+
+    <div class="plate">
+
+        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=90" alt="Modern home architecture">
+
+        <div class="plate-info">
+            <div>
+                <p>ARCHITECTURAL DETAILS</p>
+                <h3>Material Language</h3>
+            </div>
+            <span class="plate-number">04 / 04</span>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- WIDE IMAGE -->
+
+<section class="wide-image">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=90" alt="Architectural space">
+</section>
+
+<!-- JOURNAL -->
+
+<section class="journal" id="journal">
+
+    <div class="journal-heading">
+        <span>03 — FIELD NOTES</span>
+        <h2>The Journal</h2>
+    </div>
+
+    <div class="journal-content">
+
+        <input type="radio" name="journal" id="entry1" checked>
+        <input type="radio" name="journal" id="entry2">
+        <input type="radio" name="journal" id="entry3">
+
+        <div class="journal-tabs">
+
+            <label for="entry1">01 — THE LANGUAGE OF LIGHT</label>
+
+            <label for="entry2">02 — MATERIAL MATTERS</label>
+
+            <label for="entry3">03 — THE QUIET FRAME</label>
+
+        </div>
+
+        <div class="journal-entries">
+
+            <article class="entry entry1">
+                <span>FIELD NOTE / 01</span>
+                <h3>The Language of Light</h3>
+                <p>
+                    Light transforms architecture.
+                    It reveals surfaces, creates depth
+                    and changes the way we understand
+                    a space. Our photographs follow
+                    these quiet transitions throughout
+                    the day.
+                </p>
+            </article>
+
+            <article class="entry entry2">
+                <span>FIELD NOTE / 02</span>
+                <h3>Material Matters</h3>
+                <p>
+                    Every material carries a character.
+                    Wood, stone, glass and concrete
+                    create different visual experiences.
+                    We explore the textures and
+                    relationships between them.
+                </p>
+            </article>
+
+            <article class="entry entry3">
+                <span>FIELD NOTE / 03</span>
+                <h3>The Quiet Frame</h3>
+                <p>
+                    A photograph is an exercise
+                    in observation. The simplest
+                    composition can reveal the most
+                    meaningful details of a building.
+                </p>
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+
+    <div class="contact-info">
+
+        <span>04 — START A CONVERSATION</span>
+
+        <h2>
+            Let's create<br>
+            something<br>
+            meaningful.
+        </h2>
+
+        <p>
+            For architecture commissions,
+            photography projects and collaborations,
+            we would love to hear from you.
+        </p>
+
+        <a href="mailto:studio@aperture.com">
+            STUDIO@APERTURE.COM →
+        </a>
+
+    </div>
+
+    <form class="contact-form">
+
+        <input type="text" placeholder="YOUR NAME" required>
+
+        <input type="email" placeholder="YOUR EMAIL" required>
+
+        <input type="text" placeholder="PROJECT TYPE">
+
+        <textarea rows="4" placeholder="TELL US ABOUT YOUR PROJECT"></textarea>
+
+        <button type="submit">SEND ENQUIRY →</button>
+
+    </form>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h3>APERTURE.</h3>
+
+    <div class="footer-links">
+        <a href="#home">HOME</a>
+        <a href="#work">WORK</a>
+        <a href="#journal">JOURNAL</a>
+        <a href="#contact">CONTACT</a>
+    </div>
+
+    <p>© 2026 APERTURE STUDIO</p>
+
+</footer>
+
+</body>
+</html>
